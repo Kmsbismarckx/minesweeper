@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;400&display=swap');
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1080px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Roboto Mono', monospace;
+  background-color: teal;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.game {
+  border: 5px black solid;
+  padding: 25px;
+  background-color: blue;
+}
+
+.field {
+  display: grid;
+  position: relative;
+  width: fit-content;
+  margin-bottom: 50px;
+  border: 2px solid black;
+}
+
+.settings {
+  display: flex;
+  justify-content: space-between;
+}
+
+.level, .reset {
+  border: 2px solid black;
+}
+
+.reset {
+  padding: 5px;
+}
+
+.reset:hover {
+  transform: translate(2px, -2px);
+  box-shadow: -2px 2px #ccc;
+  background-color: #ddd;
+}
+
+.reset:active {
+  transform: translate(2px, -2px);
+  box-shadow: -2px 2px #ccc;
+  background-color: #ccc;
+}
+
+.level:hover {
+  background-color: #ddd;
+}
+
+.level option:first-child {
+  background-color: green;
+}
+
+.level option:nth-child(2) {
+  background-color: orange;
+}
+
+.level option:last-child {
+  background-color: red;
+}
+
+.cell {
+  border: 1px solid black;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.cell:hover {
+  background-color: #eee;
+}
+
+.cell:active {
+  background-color: #ccc;
+}
+
+.cell:disabled {
+  color: black;
+}
+
+.bomb {
+  background: url('img/naval-mine.png') no-repeat center/90%;
+}
+
+.flag {
+  background: url('img/flag.svg') no-repeat center/90%;
+}
+
+.bomb, .flag {
+  background-color: white;
+}
+
+.win::after, .lose::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: inherit;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 250%;
+}
+
+.lose::after {
+  content: 'YOU LOSE';
+  color: red;
+}
+
+.win::after {
+  content: 'YOU WIN';
+  color: green;
+}
