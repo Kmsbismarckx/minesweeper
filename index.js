@@ -1,25 +1,26 @@
-(function startGame() {
+function startGame() {
   const level = document.querySelector('.level');
   const form = document.querySelector('form');
+  console.log('start')
   setField(level.value);
 
-  (function addListeners() {
-    level.addEventListener('change', () => {
-      const field = document.querySelector('.field');
-      field.classList.remove('win');
-      field.classList.remove('lose');
-      setField(level.value);
-    })
+  level.addEventListener('change', () => {
+    const field = document.querySelector('.field');
+    field.classList.remove('win');
+    field.classList.remove('lose');
+    setField(level.value);
+    console.log('set')
+  })
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      document.location.reload();
-    })
-  })()
-})()
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    document.location.reload();
+  })
+}
 
 function setField(size) {
-  const mines = size * 1.5;
+  size = +size;
+  const mines = Math.round(size * 1.5);
   const field = document.querySelector('.field');
   const cellsCount = Math.pow(size, 2);
   field.innerHTML = '<button class="cell"></button>'.repeat(cellsCount);
@@ -36,60 +37,60 @@ function setField(size) {
     .slice(0, mines)
     .map((item) => item + 1)
     .sort((a, b) => a - b);
-
+  console.log(bombs)
   const flags = [];
 
-  (function serListeners() {
-    field.addEventListener('click', (event) => {
-      let cell = event.target;
+  field.addEventListener('click', (event) => {
+    let cell = event.target;
 
-      if (cell.tagName !== 'BUTTON') return;
+    if (cell.tagName !== 'BUTTON') return;
 
-      if (isBomb(cell.id)) {
-        isGameOver = true;
-        gameOver();
-        cells.forEach((item) => item.disabled = true);
-      } else {
-        cell.innerHTML = bombsAround(cell.id);
-        cell.disabled = true;
-      }
+    if (isBomb(cell.id)) {
+      isGameOver = true;
+      gameOver();
+      cells.forEach((item) => item.disabled = true);
+    } else {
+      cell.innerHTML = bombsAround(cell.id);
+      cell.disabled = true;
+    }
 
-      if (gameWinCheck()) {
-        gameWin();
-      }
-    });
+    if (gameWinCheck()) {
+      gameWin();
+    }
+  });
 
-    field.addEventListener('contextmenu', (event) => {
-      let cell = event.target;
+  field.addEventListener('contextmenu', (event) => {
+    let cell = event.target;
 
-      if (cell.tagName !== 'BUTTON' || cell.textContent !== '' || isGameOver || isGameWin) return;
-      event.preventDefault();
+    if (cell.tagName !== 'BUTTON' || cell.textContent !== '' || isGameOver || isGameWin) return;
+    event.preventDefault();
 
-      if (flags.includes(+cell.id)) {
-        cell.classList.remove('flag');
-        flags.splice(flags.indexOf(+cell.id), 1);
-        cell.disabled = false;
-      } else {
-        cell.classList.add('flag');
-        flags.push(+cell.id);
-        cell.disabled = true;
-      }
+    if (flags.includes(+cell.id)) {
+      cell.classList.remove('flag');
+      flags.splice(flags.indexOf(+cell.id), 1);
+      cell.disabled = false;
+    } else {
+      cell.classList.add('flag');
+      flags.push(+cell.id);
+      cell.disabled = true;
+    }
 
-      if (gameWinCheck()) {
-        gameWin();
-      }
-    })
-  })();
+    if (gameWinCheck()) {
+      gameWin();
+    }
+  })
 
   function isBomb(index) {
     return bombs.includes(+index);
   }
 
   function bombsAround(index) {
+    console.log(`index ${index}`)
+    console.log(`size ${size}`)
     let count = 0;
     let aroundCells = [];
 
-    if (index % size === 1) {
+    if (+index % +size === 1) {
       aroundCells.push(
         +index + 1,
         +index - size, +index - (size - 1),
@@ -97,7 +98,7 @@ function setField(size) {
       )
 
     }
-    else if (index % size === 0) {
+    else if (+index % +size === 0) {
       aroundCells.push(
         +index - 1,
         +index - (size + 1), +index - size,
@@ -112,6 +113,7 @@ function setField(size) {
     }
 
     aroundCells.sort((a, b) => a - b);
+
     for (let i = 0; i < aroundCells.length; i++) {
 
       for (let j = 0; j < bombs.length; j++) {
@@ -132,12 +134,12 @@ function setField(size) {
 
         if (bombs[i] === +cells[j].id) {
           cells[j].classList.add('bomb');
+          field.classList.add('lose')
         }
 
       }
 
     }
-    field.classList.add('lose')
   }
 
   function gameWinCheck() {
@@ -150,7 +152,6 @@ function setField(size) {
     isGameWin = true;
     field.classList.add('win')
   }
-
 }
 
-
+startGame();
