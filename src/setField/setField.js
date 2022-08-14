@@ -4,7 +4,7 @@ import {gameWinCheck} from "../gameWinCheck/gameWinCheck.js";
 import {gameWin} from "../gameWin/gameWin.js";
 
 export function setField(size) {
-    const mines = Math.round(Math.pow(size, 1.5));
+    const mines = Math.round(Math.pow(size, 1));
     const field = document.querySelector('.field');
     const cellsCount = Math.pow(size, 2);
     field.innerHTML = '<button class="cell"></button>'.repeat(cellsCount);
@@ -21,6 +21,7 @@ export function setField(size) {
         .map((item) => item + 1)
         .sort((a, b) => a - b);
     const flags = [];
+    let greedCells = [];
 
     cells.forEach((button, i) => {
         button.id = `${i + 1}`;
@@ -37,7 +38,7 @@ export function setField(size) {
                 gameOver(bombs, cells, field);
                 cells.forEach((item) => item.disabled = true);
             } else if (!cell.classList.contains('flag')) {
-                cell.innerHTML = bombsAround(+cell.id, size, bombs);
+                cell.innerHTML = bombsAround(+cell.id, size, bombs).count;
                 cell.disabled = true;
             }
 

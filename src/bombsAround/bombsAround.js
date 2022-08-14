@@ -35,6 +35,8 @@ export function bombsAround(index, size, bombs) {
         }
 
     }
-    console.log(1)
-    return count;
+    return {
+        aroundCells,
+        count
+    };
 }
