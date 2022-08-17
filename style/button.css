@@ -1,0 +1,30 @@
+button {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+button:disabled {
+    background-color: #aaa;
+}
+
+.cell {
+    border: 3px solid #aaa;
+    border-right-color: #333;
+    border-bottom-color: #333;
+    height: 40px;
+    box-sizing: border-box;
+    font-size: 24px;
+    font-weight: 900;
+    font-family: 'Roboto Mono', monospace;
+ }
+
+.cell:active {
+    background-color: #ccc;
+    border: 1px solid #aaa;
+}
+
+.cell:disabled {
+    background-color: #ccc;
+    border: 1px solid #aaa;
+}

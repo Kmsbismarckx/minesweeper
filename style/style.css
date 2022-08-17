@@ -11,15 +11,36 @@ body {
   background-color: teal;
 }
 
-button {
-  margin: 0;
-  padding: 0;
-  background-color: white;
-}
-
 h1 {
   text-align: center;
   margin-bottom: 50px;
+}
+
+.display {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.display p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  width: 55px;
+  height: 55px;
+  border: 5px solid black;
+  border-right-color: #ddd;
+  border-bottom-color: #ddd;
+  box-sizing: border-box;
+  background-color: #eee;
+}
+
+.display p .flags__count {
+  display: block;
+  font-size: 150%;
+  width: inherit;
+  text-align: center;
 }
 
 .game {
@@ -31,9 +52,12 @@ h1 {
 .field {
   display: grid;
   position: relative;
+  box-sizing: border-box;
   width: fit-content;
   margin-bottom: 50px;
-  border: 2px solid black;
+  border: 5px solid #000;
+  border-right-color: #ddd;
+  border-bottom-color: #ddd;
 }
 
 .settings {
@@ -77,30 +101,12 @@ h1 {
   background-color: red;
 }
 
-.cell {
-  border: 1px solid black;
-  height: 40px;
-  box-sizing: border-box;
-}
-
-.cell:hover {
-  background-color: #eee;
-}
-
-.cell:active {
-  background-color: #ccc;
-}
-
-.cell:disabled {
-  color: black;
-}
-
 .bomb {
-  background: url('img/naval-mine.png') no-repeat center/90%;
+  background: url('../img/naval-mine.png') no-repeat center/90%;
 }
 
 .flag {
-  background: url('img/flag.svg') no-repeat center/90%;
+  background: url('../img/flag.svg') no-repeat center/90%;
 }
 
 .bomb, .flag {
