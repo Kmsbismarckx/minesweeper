@@ -3,18 +3,23 @@
   <head>
     <meta charset="utf-8">
     <title>Minesweeper</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/button.css">
+    <link rel="stylesheet" href="style/numbers.css">
   </head>
   <body>
     <h1>Minesweeper</h1>
     <div class="game">
+      <div class="display">
+        <p ><span class="flags__count"></span></p>
+      </div>
       <div class="field"></div>
       <form class="settings" action="">
         <button class="reset" type="submit">Начать заново</button>
         <select class="level" name="level" id="">
-          <option value="5" >Легко</option>
+          <option value="5" selected>Легко</option>
           <option value="10">Средне</option>
-          <option value="20" selected>Сложно</option>
+          <option value="20" >Сложно</option>
         </select>
       </form>
     </div>
