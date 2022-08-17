@@ -1,11 +1,10 @@
-import {gameOver} from "../gameOver/gameOver.js";
-import {bombsAround} from "../bombsAround/bombsAround.js";
-import {gameWinCheck} from "../gameWinCheck/gameWinCheck.js";
-import {gameWin} from "../gameWin/gameWin.js";
+import {setEventClick} from "../events/setEventClick/setEventClick.js";
+import {setEventContextmenu} from "../events/setEventContextmenu/setEventContextmenu.js";
 
 export function setField(size) {
-    const mines = Math.round(Math.pow(size, 1));
+    const mines = Math.round(Math.pow(size, 1.5));
     const field = document.querySelector('.field');
+    const flagsCount = document.querySelector('.flags__count')
     const cellsCount = Math.pow(size, 2);
     field.innerHTML = '<button class="cell"></button>'.repeat(cellsCount);
     field.style.gridTemplateColumns = `repeat(${size}, 40px)`;
@@ -21,51 +20,27 @@ export function setField(size) {
         .map((item) => item + 1)
         .sort((a, b) => a - b);
     const flags = [];
-    let greedCells = [];
+    let bombsCount = {};
+
+    flagsCount.textContent = bombs.length;
 
     cells.forEach((button, i) => {
         button.id = `${i + 1}`;
 
-        button.addEventListener('click', (event) => {
-            let cell = event.target;
-
-            if (cell.tagName !== 'BUTTON') {
-                return;
-            }
-
-            if (bombs.includes(+cell.id)) {
-                isGameOver = true;
-                gameOver(bombs, cells, field);
-                cells.forEach((item) => item.disabled = true);
-            } else if (!cell.classList.contains('flag')) {
-                cell.innerHTML = bombsAround(+cell.id, size, bombs).count;
-                cell.disabled = true;
-            }
-
-            if (gameWinCheck(cells, bombs, flags)) {
-                gameWin(isGameWin, field);
-            }
+        setEventClick(button, {
+            flags,
+            field,
+            cells,
+            bombs,
+            isGameOver,
+            isGameWin,
+            bombsCount,
+            flagsCount,
+            size
         })
 
-        button.addEventListener('contextmenu', (event) => {
-            event.preventDefault();
-            let cell = event.target;
-
-            if (cell.tagName !== 'BUTTON' || cell.textContent !== '' || isGameOver || isGameWin) {
-                return;
-            }
-
-            if (flags.includes(+cell.id)) {
-                cell.classList.remove('flag');
-                flags.splice(flags.indexOf(+cell.id), 1);
-            } else {
-                cell.classList.add('flag');
-                flags.push(+cell.id);
-            }
-
-            if (gameWinCheck(cells, bombs, flags)) {
-                gameWin(isGameWin, field);
-            }
+        setEventContextmenu(button, {
+            flags, cells, bombs, isGameWin, isGameOver, field, flagsCount
         })
     });
 }
