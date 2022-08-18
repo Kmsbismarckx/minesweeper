@@ -1,18 +1,19 @@
 import {setField} from "./src/setField/setField.js";
 
-function startGame() {
+function startGame(key, value) {
   const level = document.querySelector('.level');
   const form = document.querySelector('form');
   const options = document.querySelectorAll('option');
   const field = document.querySelector('.field')
-  let cashedDifficulties = +localStorage.getItem('difficult');
+  let cashedDifficulties = +localStorage.getItem('difficult') || 5;
 
   Array.from(options).forEach(item => {
-    console.log(typeof cashedDifficulties)
     item.selected = item.value === cashedDifficulties.toString();
   })
 
   setField(cashedDifficulties);
+  localStorage.setItem('difficult', cashedDifficulties.toString())
+  console.log(cashedDifficulties)
 
 
   level.addEventListener('change', () => {
@@ -21,6 +22,7 @@ function startGame() {
     field.classList.remove('lose');
     setField(+level.value);
     localStorage.setItem('difficult', `${level.value}`)
+    console.log(localStorage)
   })
 
   form.addEventListener('submit', (event) => {

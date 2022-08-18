@@ -2,7 +2,7 @@ import {setEventClick} from "../events/setEventClick/setEventClick.js";
 import {setEventContextmenu} from "../events/setEventContextmenu/setEventContextmenu.js";
 
 export function setField(size) {
-    const mines = Math.round(Math.pow(size, 1.5));
+    const mines = Math.round(Math.pow(size, 1));
     const field = document.querySelector('.field');
     const flagsCount = document.querySelector('.flags__count')
     const cellsCount = Math.pow(size, 2);
@@ -20,6 +20,7 @@ export function setField(size) {
         .map((item) => item + 1)
         .sort((a, b) => a - b);
     const flags = [];
+    console.log(bombs)
     let bombsCount = {};
 
     flagsCount.textContent = bombs.length;
